@@ -1,0 +1,7 @@
+TEAM_ID=
+
+PRODUCT_NAME=apollo-kotlin-demo
+PRODUCT_BUNDLE_IDENTIFIER=com.apollokotlindemo.apollo-kotlin-demo$(TEAM_ID)
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0
