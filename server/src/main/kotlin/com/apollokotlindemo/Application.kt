@@ -7,6 +7,9 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import com.expediagroup.graphql.server.ktor.*
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
+import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.statuspages.*
 
 fun main() {
@@ -18,6 +21,37 @@ fun Application.module() {
   // Install WebSockets for GraphQL subscriptions
   install(WebSockets)
 
+  // Configure CORS for GraphQL and WebSocket support
+  install(CORS) {
+    // HTTP Methods
+    allowMethod(HttpMethod.Options)
+    allowMethod(HttpMethod.Get)
+    allowMethod(HttpMethod.Post) // Required for GraphQL mutations and queries
+    allowMethod(HttpMethod.Put)
+    allowMethod(HttpMethod.Delete)
+    allowMethod(HttpMethod.Patch)
+
+    // Headers
+    allowHeader(HttpHeaders.Authorization)
+    allowHeader(HttpHeaders.ContentType) // Required for GraphQL JSON requests
+    allowHeader(HttpHeaders.Accept)
+    allowHeader("X-Requested-With")
+    allowHeader("Apollo-Require-Preflight") // Apollo Client specific
+    allowHeader("X-Apollo-Operation-Name") // Apollo Client operation tracking
+
+    // WebSocket specific headers
+    allowHeader(HttpHeaders.SecWebSocketProtocol)
+    allowHeader(HttpHeaders.SecWebSocketExtensions)
+
+    allowHost("*")  // For web client
+
+    // Credentials and other settings
+    allowCredentials = true
+    allowNonSimpleContentTypes = true
+
+    // Max age for preflight requests (optional optimization)
+    maxAgeInSeconds = 86400 // 24 hours
+  }
   // Configure GraphQL
   install(GraphQL) {
     schema {

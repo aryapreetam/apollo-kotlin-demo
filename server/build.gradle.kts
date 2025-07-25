@@ -20,6 +20,7 @@ dependencies {
     implementation(libs.ktor.serverNetty)
     implementation(libs.ktor.websockets)
     implementation(libs.graphql.kotlin.ktor.server)
+    implementation(libs.ktor.cors)
     testImplementation(libs.ktor.serverTestHost)
     testImplementation(libs.kotlin.testJunit)
 }
