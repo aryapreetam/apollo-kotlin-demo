@@ -14,10 +14,12 @@ application {
 }
 
 dependencies {
-    implementation(projects.shared)
+//    implementation(projects.shared)
     implementation(libs.logback)
     implementation(libs.ktor.serverCore)
     implementation(libs.ktor.serverNetty)
+    implementation(libs.ktor.websockets)
+    implementation(libs.graphql.kotlin.ktor.server)
     testImplementation(libs.ktor.serverTestHost)
     testImplementation(libs.kotlin.testJunit)
 }
