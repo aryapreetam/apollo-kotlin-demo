@@ -1,15 +1,13 @@
 package com.apollokotlindemo.data
 
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.annotations.ApolloExperimental
 import com.apollographql.apollo.api.ApolloRequest
 import com.apollographql.apollo.api.ApolloResponse
 import com.apollographql.apollo.api.Operation
 import com.apollographql.apollo.interceptor.ApolloInterceptor
 import com.apollographql.apollo.interceptor.ApolloInterceptorChain
-import com.apollographql.apollo.network.http.HttpNetworkTransport
-import com.apollographql.apollo.network.ws.GraphQLWsProtocol
-import com.apollographql.apollo.network.ws.WebSocketNetworkTransport
-import com.apollokotlindemo.Platform
+import com.apollographql.apollo.network.websocket.WebSocketNetworkTransport
 import com.apollokotlindemo.getPlatform
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
@@ -53,13 +51,13 @@ object ApolloClientProvider {
     return INSTANCE!!
   }
 
+  @OptIn(ApolloExperimental::class)
   private fun createApolloClient(): ApolloClient {
     return ApolloClient.Builder()
       .serverUrl("$baseUrl/graphql")
       .addInterceptor(LoggingIntercepter())
       .subscriptionNetworkTransport(
         WebSocketNetworkTransport.Builder()
-          .protocol(GraphQLWsProtocol.Factory())
           .serverUrl("$wsUrl/subscriptions")
           .build()
       )
