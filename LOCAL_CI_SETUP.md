@@ -1,30 +1,31 @@
 # Local CI Pipeline Setup & Apollo Repository Optimization
 
-This document provides detailed instructions for setting up local CI pipeline execution and optimizing Apollo Kotlin
-dependencies for GitHub Actions deployment.
+This document provides detailed instructions for setting up local CI pipeline execution and using Apollo Kotlin
+with WASM support for GitHub Actions deployment.
 
 ## 🎯 Overview
 
-This project required a custom Apollo Kotlin build with subscription support (`5.0.0-alpha.local-SNAPSHOT`) that wasn't
-available in public Maven repositories. The challenge was to make GitHub Actions CI work with these local artifacts
-while keeping the repository size manageable.
+This project uses a custom Apollo Kotlin build with WASM support (`5.0.0-alpha.local-SNAPSHOT`) that wasn't
+available in public Maven repositories. The solution builds Apollo Kotlin from source in CI to ensure
+the latest WASM-compatible version is always available.
 
 ## 📋 Problem Statement
 
-1. **Custom Apollo Build**: Using `5.0.0-alpha.local-SNAPSHOT` with subscription support
-2. **CI Failure**: GitHub Actions couldn't resolve custom Apollo dependencies
-3. **Repository Size**: Initial approach created a 392MB repository
-4. **Local Testing**: Need to test CI pipeline locally before pushing
+1. **Custom Apollo Build**: Using `5.0.0-alpha.local-SNAPSHOT` with WASM support
+2. **WASM Support**: Official Apollo releases don't support WASM target yet
+3. **CI Compatibility**: Need to make GitHub Actions work with custom Apollo dependencies
+4. **Repository Size**: Avoid committing large dependency artifacts
 
 ## 🛠️ Solution Architecture
 
-### Local Repository Strategy
+### Build-from-Source Strategy
 
-Instead of using JAR files in `libs/`, we implemented a **local Maven repository** approach:
+Instead of committing Apollo artifacts, we implemented a **build-from-source** approach:
 
-- Created `repo/` directory with Maven repository structure
-- Updated `settings.gradle.kts` to prioritize local repository
-- Optimized to include only essential artifacts
+- Clone Apollo Kotlin repository in CI
+- Set custom version (`5.0.0-alpha.local-SNAPSHOT`)
+- Build and publish to local Maven repository
+- Use `mavenLocal()` priority in Gradle configuration
 
 ### Repository Configuration
 
@@ -32,150 +33,86 @@ Instead of using JAR files in `libs/`, we implemented a **local Maven repository
 // settings.gradle.kts
 pluginManagement {
     repositories {
-        // Local Apollo repository with custom artifacts
-        maven {
-            url = uri("$rootDir/repo")
-            content {
-                includeGroup("com.apollographql.apollo")
-            }
-        }
-        mavenLocal()
-        // ... other repositories
+        mavenLocal()  // Prioritize locally built artifacts
+        google()
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
 
 dependencyResolutionManagement {
     repositories {
-        // Local Apollo repository with custom artifacts  
-        maven {
-            url = uri("$rootDir/repo")
-            content {
-                includeGroup("com.apollographql.apollo")
-            }
-        }
-        mavenLocal()
-        // ... other repositories
+        mavenLocal()  // Prioritize locally built artifacts
+        google()
+        mavenCentral()
     }
 }
 ```
 
 ## 🚀 Step-by-Step Implementation
 
-### Step 1: Analyze Current Dependencies
+### Step 1: Configure Repository Priority
 
-1. **Check what Apollo dependencies you're using:**
-   ```bash
-   grep -r "apollo" --include="*.gradle.kts" .
-   ```
-
-2. **Review version catalog:**
-   ```bash
-   cat gradle/libs.versions.toml
-   ```
-
-3. **Identify your target platforms** (in our case: WasmJS for web deployment)
-
-### Step 2: Create Local Repository Structure
-
-1. **Create repository directory:**
-   ```bash
-   mkdir -p repo/com/apollographql/apollo
-   ```
-
-2. **Copy only essential artifacts from local Maven repository:**
-   ```bash
-   # Plugin (required for GraphQL code generation)
-   cp -r ~/.m2/repository/com/apollographql/apollo/apollo-gradle-plugin/5.0.0-alpha.local-SNAPSHOT \
-     repo/com/apollographql/apollo/
-
-   # Runtime (core multiplatform library)
-   cp -r ~/.m2/repository/com/apollographql/apollo/apollo-runtime/5.0.0-alpha.local-SNAPSHOT \
-     repo/com/apollographql/apollo/
-
-   # Platform-specific runtime for your target (WasmJS in our case)
-   cp -r ~/.m2/repository/com/apollographql/apollo/apollo-runtime-wasm-js/5.0.0-alpha.local-SNAPSHOT \
-     repo/com/apollographql/apollo/
-   ```
-
-### Step 3: Configure Repository Priority
-
-1. **Update `settings.gradle.kts`** to use local repository first
-2. **Use content filtering** to restrict local repo to Apollo artifacts only
+1. **Update `settings.gradle.kts`** to use `mavenLocal()` first
+2. **Remove custom repository configuration** (no longer needed)
 3. **Ensure proper fallback** to other repositories for non-Apollo dependencies
 
-### Step 4: Test Local CI Pipeline
+### Step 2: Configure CI Workflow
+
+The GitHub Actions workflow automatically:
+
+```yaml
+- name: Build Apollo Kotlin with WASM support
+  run: |
+    git clone https://github.com/apollographql/apollo-kotlin.git apollo-kotlin
+    cd apollo-kotlin
+    git checkout main
+    sed -i 's/VERSION_NAME=.*/VERSION_NAME=5.0.0-alpha.local-SNAPSHOT/' gradle.properties
+    ./gradlew publishToMavenLocal -x test
+```
+
+### Step 3: Test Local CI Pipeline
 
 1. **Run the exact CI command locally:**
    ```bash
    ./gradlew :composeApp:wasmJsBrowserDistribution
    ```
 
-2. **Simulate deployment artifact creation:**
+2. **Simulate Apollo build locally:**
    ```bash
-   mkdir -p github-pages
-   cp -r composeApp/build/dist/wasmJs/productionExecutable/* github-pages/
+   git clone https://github.com/apollographql/apollo-kotlin.git apollo-kotlin
+   cd apollo-kotlin
+   git checkout main
+   sed -i 's/VERSION_NAME=.*/VERSION_NAME=5.0.0-alpha.local-SNAPSHOT/' gradle.properties
+   ./gradlew publishToMavenLocal -x test
+   cd ..
+   ./gradlew :composeApp:wasmJsBrowserDistribution
    ```
 
 3. **Verify all required files are generated:**
    ```bash
-   ls -la github-pages/
-   ```
-
-### Step 5: Repository Optimization
-
-**Initial size analysis:**
-
-```bash
-du -sh repo/  # Was 392MB initially
-```
-
-**Optimization strategy:**
-
-- Remove unnecessary platform artifacts (android, ios, desktop, etc.)
-- Keep only artifacts needed for your target platform
-- Remove duplicate dependencies and transitive artifacts
-
-**Final optimized size:**
-
-```bash
-du -sh repo/  # Reduced to 1.0MB (99% reduction!)
-```
-
-### Step 6: Git Configuration
-
-1. **Update `.gitignore`** to include optimized repository:
-   ```gitignore
-   # Remove repo/ from gitignore to commit Apollo artifacts
-   # repo/  <- Remove this line
-   
-   # Keep deployment artifacts excluded
-   github-pages/
-   ```
-
-2. **Commit the optimized repository:**
-   ```bash
-   git add repo/ .gitignore
-   git commit -m "Add optimized Apollo local repository for CI deployment"
+   ls -la composeApp/build/dist/wasmJs/productionExecutable/
    ```
 
 ## 📊 Results Achieved
 
-### Size Optimization
+### Repository Benefits
 
-- **Before**: 392MB (full Apollo Maven repository)
-- **After**: 1.0MB (targeted essential artifacts)
-- **Reduction**: 99% size decrease
+- **No repository bloat**: Zero committed Apollo artifacts
+- **Always fresh**: Uses latest Apollo main branch with WASM support
+- **Self-contained CI**: Each CI run builds exactly what it needs
+- **Easy maintenance**: No manual dependency management
 
-### Performance Improvements
+### Performance
 
-- **Build Time**: ~1-2 minutes for WasmJS production build
+- **Build Time**: ~3-5 minutes for Apollo build + ~1-2 minutes for WasmJS build
 - **Bundle Size**: 548KB JavaScript + 10.8MB WebAssembly
-- **Git Operations**: Dramatically faster due to smaller repository
+- **Git Operations**: Fast due to no large committed artifacts
 
 ### CI Compatibility
 
-- ✅ **Local CI Simulation**: Identical to GitHub Actions workflow
-- ✅ **GitHub Actions Ready**: Custom Apollo artifacts available to CI runners
+- ✅ **Fresh Dependencies**: Always uses latest Apollo with WASM support
+- ✅ **GitHub Actions Ready**: Builds Apollo from source in CI
 - ✅ **Cross-platform**: Works on macOS, Linux (GitHub Actions), Windows
 
 ## 🔄 Local CI Execution Commands
@@ -183,6 +120,14 @@ du -sh repo/  # Reduced to 1.0MB (99% reduction!)
 ### Full CI Simulation
 
 ```bash
+# Clone and build Apollo (same as CI)
+git clone https://github.com/apollographql/apollo-kotlin.git apollo-kotlin
+cd apollo-kotlin
+git checkout main
+sed -i 's/VERSION_NAME=.*/VERSION_NAME=5.0.0-alpha.local-SNAPSHOT/' gradle.properties
+./gradlew publishToMavenLocal -x test
+cd ..
+
 # Clean build (equivalent to fresh CI environment)
 ./gradlew clean
 
@@ -197,10 +142,10 @@ cp -r composeApp/build/dist/wasmJs/productionExecutable/* github-pages/
 ls -la github-pages/
 ```
 
-### Quick CI Test
+### Quick CI Test (if Apollo already built)
 
 ```bash
-# Quick build test (reuses cache)
+# Quick build test (reuses Apollo cache)
 ./gradlew :composeApp:wasmJsBrowserDistribution
 ```
 
@@ -218,18 +163,10 @@ ls -la github-pages/
 
 ```
 apollo-kotlin-demo/
-├── repo/                                    # Local Apollo Maven repository
-│   └── com/apollographql/apollo/
-│       ├── apollo-gradle-plugin/
-│       │   └── 5.0.0-alpha.local-SNAPSHOT/
-│       ├── apollo-runtime/
-│       │   └── 5.0.0-alpha.local-SNAPSHOT/
-│       └── apollo-runtime-wasm-js/
-│           └── 5.0.0-alpha.local-SNAPSHOT/
-├── github-pages/                            # CI deployment artifacts (gitignored)
-├── settings.gradle.kts                      # Repository configuration
-├── .github/workflows/deploy-wasmjs.yml      # GitHub Actions workflow
-└── scripts/test-github-actions.sh           # Local CI simulation script
+├── .github/workflows/deploy-wasmjs.yml    # GitHub Actions workflow with Apollo build
+├── github-pages/                          # CI deployment artifacts (gitignored)
+├── settings.gradle.kts                    # Repository configuration (mavenLocal priority)
+└── scripts/test-github-actions.sh         # Local CI simulation script
 ```
 
 ## 🐛 Troubleshooting
@@ -237,45 +174,24 @@ apollo-kotlin-demo/
 ### Common Issues
 
 1. **"Plugin was not found" Error:**
-   - **Root Cause**: Incorrect Maven repository structure - artifacts must be in separate directories
-   - **Solution**: Ensure proper directory structure:
-     ```
-     repo/com/apollographql/apollo/
-     ├── apollo-gradle-plugin/5.0.0-alpha.local-SNAPSHOT/
-     ├── com.apollographql.apollo.gradle.plugin/5.0.0-alpha.local-SNAPSHOT/  # Plugin marker
-     ├── apollo-runtime/5.0.0-alpha.local-SNAPSHOT/
-     └── apollo-runtime-wasm-js/5.0.0-alpha.local-SNAPSHOT/
-     ```
-   - **Fix Command**:
+   - **Root Cause**: Apollo not built or wrong version
+   - **Solution**: Ensure Apollo is built with correct version:
      ```bash
-     rm -rf repo/ && mkdir -p repo/com/apollographql/apollo
-     mkdir -p repo/com/apollographql/apollo/apollo-gradle-plugin
-     cp -r ~/.m2/repository/com/apollographql/apollo/apollo-gradle-plugin/5.0.0-alpha.local-SNAPSHOT repo/com/apollographql/apollo/apollo-gradle-plugin/
-     mkdir -p "repo/com/apollographql/apollo/com.apollographql.apollo.gradle.plugin"
-     cp -r ~/.m2/repository/com/apollographql/apollo/com.apollographql.apollo.gradle.plugin/5.0.0-alpha.local-SNAPSHOT "repo/com/apollographql/apollo/com.apollographql.apollo.gradle.plugin/"
-     mkdir -p repo/com/apollographql/apollo/apollo-runtime
-     cp -r ~/.m2/repository/com/apollographql/apollo/apollo-runtime/5.0.0-alpha.local-SNAPSHOT repo/com/apollographql/apollo/apollo-runtime/
-     mkdir -p repo/com/apollographql/apollo/apollo-runtime-wasm-js
-     cp -r ~/.m2/repository/com/apollographql/apollo/apollo-runtime-wasm-js/5.0.0-alpha.local-SNAPSHOT repo/com/apollographql/apollo/apollo-runtime-wasm-js/
+     cd apollo-kotlin
+     grep VERSION_NAME gradle.properties
+     # Should show: VERSION_NAME=5.0.0-alpha.local-SNAPSHOT
+     ./gradlew publishToMavenLocal -x test
      ```
-   - Verify `repo/` directory is committed to Git
-   - Check that Apollo version matches across all files
 
-2. **Build Cache Issues:**
-    - Ensure `repo/` directory is committed to Git
-    - Verify `settings.gradle.kts` points to correct local repository
-    - Check that Apollo version matches across all files
+2. **WASM Target Not Found:**
+   - **Root Cause**: Using official Apollo release instead of source build
+   - **Solution**: Verify `mavenLocal()` is first in `settings.gradle.kts`
+   - **Check**: Look for "Downloaded from: mavenLocal" in Gradle logs
 
-2. **Build Cache Issues:**
-    - Run `./gradlew clean` to clear cache
-    - Delete `.gradle/` folder if persistent issues
-    - Use `--no-configuration-cache` flag for debugging
-
-3. **Platform-specific Artifacts Missing:**
-    - Copy platform-specific runtime for your target
-    - For WasmJS: `apollo-runtime-wasm-js`
-    - For Android: `apollo-runtime-android`
-    - For iOS: `apollo-runtime-iosX64`, `apollo-runtime-iosArm64`
+3. **Build Cache Issues:**
+   - Run `./gradlew clean` to clear cache
+   - Delete `.gradle/` folder if persistent issues
+   - Rebuild Apollo: `cd apollo-kotlin && ./gradlew clean publishToMavenLocal -x test`
 
 ### Verification Steps
 
@@ -296,42 +212,27 @@ apollo-kotlin-demo/
 
 ## 🔮 Future Maintenance
 
-### When Apollo Version Changes
+### When Apollo Main Branch Updates
 
-1. **Update version in `gradle/libs.versions.toml`:**
-   ```toml
-   apollo = "NEW_VERSION"
+The CI automatically uses the latest `main` branch, so no manual updates needed unless:
+
+1. **Breaking changes in Apollo main**: Pin to specific commit:
+   ```yaml
+   git checkout main
+   # Change to:
+   git checkout SPECIFIC_COMMIT_HASH
    ```
 
-2. **Update local repository:**
-   ```bash
-   rm -rf repo/
-   mkdir -p repo/com/apollographql/apollo
-   # Copy new version artifacts
-   cp -r ~/.m2/repository/com/apollographql/apollo/apollo-gradle-plugin/NEW_VERSION repo/com/apollographql/apollo/
-   # ... repeat for other artifacts
-   ```
-
-3. **Test and commit:**
-   ```bash
-   ./gradlew clean :composeApp:wasmJsBrowserDistribution
-   git add repo/
-   git commit -m "Update Apollo to NEW_VERSION"
+2. **Apollo version scheme changes**: Update version replacement:
+   ```yaml
+   sed -i 's/VERSION_NAME=.*/VERSION_NAME=NEW_VERSION_PATTERN/' gradle.properties
    ```
 
 ### Adding New Target Platforms
 
-1. **Identify required platform artifacts:**
-   ```bash
-   find ~/.m2/repository/com/apollographql/apollo -name "*NEW_PLATFORM*"
-   ```
-
-2. **Copy platform-specific artifacts:**
-   ```bash
-   cp -r ~/.m2/repository/com/apollographql/apollo/apollo-runtime-NEW_PLATFORM/VERSION repo/com/apollographql/apollo/
-   ```
-
-3. **Test platform-specific build:**
+1. **Apollo automatically supports new targets** when they're added to main branch
+2. **No manual artifact copying needed**
+3. **Test new platform builds**:
    ```bash
    ./gradlew :composeApp:NEW_PLATFORM_TARGET
    ```
@@ -341,14 +242,10 @@ apollo-kotlin-demo/
 - **GitHub Actions Workflow**: `.github/workflows/deploy-wasmjs.yml`
 - **Local CI Script**: `scripts/test-github-actions.sh`
 - **Deployment Guide**: `DEPLOYMENT.md`
-- **Apollo Kotlin Documentation**: https://apollographql.com/docs/kotlin
+- **Apollo Kotlin Repository**: https://github.com/apollographql/apollo-kotlin
 - **Gradle Repository Management**: https://docs.gradle.org/current/userguide/repository_types.html
 
 ---
 
-**Created**: January 2025  
-**Last Updated**: January 2025  
-**Maintained By**: Apollo Kotlin Demo Team
-
 This document ensures that future CI pipeline execution and Apollo dependency management can be performed efficiently
-and consistently.
+using the latest Apollo Kotlin source with WASM support.

@@ -36,16 +36,31 @@ This guide explains how to deploy the Apollo Kotlin GraphQL Subscriptions Demo t
     - Access your app at: `https://your-username.github.io/apollo-kotlin-demo`
 
 ### What Gets Deployed
-- Production-optimized WasmJS build
+
+- Production-optimized WasmJS build with WASM support
 - Direct access to the Compose Multiplatform app
 - No landing page - users see the app immediately
 
 ### Workflow Details
 
 The GitHub Actions workflow (`.github/workflows/deploy-wasmjs.yml`):
+
+- ✅ Builds Apollo Kotlin from source with WASM support
 - ✅ Builds WasmJS production bundle
 - ✅ Deploys directly to GitHub Pages
 - ✅ Triggered on push to main branch
+
+### Apollo Kotlin WASM Support
+
+This project uses a custom Apollo Kotlin build (`5.0.0-alpha.local-SNAPSHOT`) with WASM support that isn't available in
+public Maven repositories. The CI automatically:
+
+1. **Clones** the latest Apollo Kotlin repository
+2. **Sets version** to `5.0.0-alpha.local-SNAPSHOT`
+3. **Builds and publishes** to local Maven repository
+4. **Uses the fresh build** for the WasmJS compilation
+
+This ensures the latest WASM-compatible Apollo version is always used without repository bloat.
 
 ## 🖥️ Server Deployment to Render.com
 
@@ -87,9 +102,7 @@ The following are automatically configured:
 ### What Gets Deployed
 
 - Ktor GraphQL server with subscriptions
-- CORS configured for cross-origin requests
-- Health check endpoint at `/`
-- GraphiQL playground at `/graphiql`
+- CORS configured for cross-origin requests- GraphiQL playground at `/graphiql`
 
 ## 🔧 Configuration Files
 

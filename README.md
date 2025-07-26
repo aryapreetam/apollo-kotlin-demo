@@ -1,7 +1,7 @@
 # Apollo Kotlin GraphQL Subscriptions Demo
 
-This project demonstrates **GraphQL subscriptions working with WebAssembly (WasmJS) target** in Apollo Kotlin. It was
-created as a demo for a PR that enables GraphQL subscriptions support for the WasmJS target in Apollo Kotlin.
+This project demonstrates **GraphQL subscriptions working with WebAssembly (WasmJS) target** in Apollo Kotlin. It uses
+a custom Apollo Kotlin build with WASM support that is automatically built from source in CI.
 
 ## 🚀 What This Project Demonstrates
 
@@ -9,13 +9,14 @@ created as a demo for a PR that enables GraphQL subscriptions support for the Wa
 - **Real-time communication** between GraphQL server and clients using WebSockets
 - **Multiplatform GraphQL client** implementation with Apollo Kotlin
 - **Cross-platform UI** built with Compose Multiplatform
+- **CI/CD pipeline** that builds Apollo Kotlin from source with WASM support
 
 ## 📱 Supported Platforms
 
 - **Android** - Native Android app
 - **iOS** - Native iOS app
 - **Desktop** - JVM desktop application (macOS, Windows, Linux)
-- **Web (WasmJS)** - WebAssembly web application
+- **Web (WasmJS)** - WebAssembly web application (requires custom Apollo build)
 - **Server** - Ktor GraphQL server with subscription support
 
 ## 🏗️ Project Structure
@@ -50,7 +51,7 @@ iOS-specific entry point and configuration for the native iOS application.
 
 ### Prerequisites
 
-- **JDK 11+**
+- **JDK 17+** (required for Apollo Kotlin build)
 - **Android Studio** (for Android builds)
 - **Xcode** (for iOS builds, macOS only)
 - **Node.js** (for web builds)
@@ -61,6 +62,19 @@ iOS-specific entry point and configuration for the native iOS application.
 git clone https://github.com/your-username/apollo-kotlin-demo.git
 cd apollo-kotlin-demo
 ```
+
+### Apollo Kotlin WASM Support
+
+This project uses Apollo Kotlin `5.0.0-alpha.local-SNAPSHOT` with WASM support. The CI automatically:
+
+1. **Builds Apollo Kotlin from source** with the latest WASM support
+2. **Publishes to local Maven** repository
+3. **Uses the fresh build** for WasmJS compilation
+
+For local development, you can either:
+
+- **Use the CI**: Push changes and let GitHub Actions build everything
+- **Build Apollo locally**: Follow the steps in `LOCAL_CI_SETUP.md`
 
 ## 🚀 Running the Project
 
@@ -109,18 +123,18 @@ Access at `http://localhost:8080` (different port from server)
 
 ### Deployed Server
 
-The GraphQL server is deployed at: **[Your Render.com URL]**
+The GraphQL server is deployed at: **https://apollo-kotlin-demo.onrender.com/graphql**
 
 - Use this endpoint in clients to test without running the server locally
-- GraphiQL playground: **[Your Render.com URL]/graphiql**
+- GraphiQL playground: **https://apollo-kotlin-demo.onrender.com/graphiql**
 
 ### Web App (WasmJS)
 
-Live WasmJS demo: **[Your GitHub Pages URL]**
+Live WasmJS demo: **https://aryapreetam.github.io/apollo-kotlin-demo**
 
 ### Downloadable Executables
 
-Pre-built executables are available in the [Releases](../../releases) section:
+Pre-built executables will be available in the [Releases](../../releases) section:(TBD)
 
 - **Android APK**
 - **Desktop applications** (macOS .dmg, Windows .msi, Linux .deb)
@@ -128,7 +142,18 @@ Pre-built executables are available in the [Releases](../../releases) section:
 
 ## 📹 Demo Video
 
-*[Video demonstrating GraphQL subscriptions working across all targets will be uploaded here]*
+<table>
+  <tr>
+    <td style="border-bottom:1px solid #ccc;">web(wasmJs)</td>
+    <td rowspan="2">android</td>
+    <td rowspan="2">ios</td>
+  </tr>
+  <tr>
+    <td>desktop</td>
+  </tr>
+</table>
+
+https://github.com/user-attachments/assets/f394db05-c9d0-40da-9183-cde85d480e56
 
 ## 🔧 Development
 
