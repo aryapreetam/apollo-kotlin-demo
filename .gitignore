@@ -10,6 +10,9 @@ local.properties
 *.swp
 *.swo
 
+# Local repository artifacts (no longer needed with publishToLocalMaven)
+repo/
+
 # XCode
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
