@@ -1,0 +1,974 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.apollographql.apollo",
+    "module": "apollo-runtime",
+    "version": "5.0.0-alpha.local-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.0.0-rc-1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "com.apollographql.apollo",
+          "module": "apollo-api",
+          "version": {
+            "requires": "5.0.0-alpha.local-SNAPSHOT"
+          }
+        },
+        {
+          "group": "com.apollographql.apollo",
+          "module": "apollo-mpp-utils",
+          "version": {
+            "requires": "5.0.0-alpha.local-SNAPSHOT"
+          }
+        },
+        {
+          "group": "com.squareup.okio",
+          "module": "okio",
+          "version": {
+            "requires": "3.9.0"
+          }
+        },
+        {
+          "group": "com.benasher44",
+          "module": "uuid",
+          "version": {
+            "requires": "0.8.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "atomicfu",
+          "version": {
+            "requires": "0.26.0"
+          }
+        },
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "4.12.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "apollo-runtime-metadata-5.0.0-alpha.local-SNAPSHOT.jar",
+          "url": "apollo-runtime-5.0.0-alpha.local-SNAPSHOT.jar",
+          "size": 46778,
+          "sha512": "75726c7795dfd1fdc837362514de92a51b5a3f77c54236dc61a1c189d6af392c33edb6bddb47920fc9396970960b3d77f4bc71d94e21ad3beccbf69ade06a8d8",
+          "sha256": "941c79ffb8aa4ada5381d8d98aaf343884041283d216c5899fbc4a59ab730d3a",
+          "sha1": "341dd8cb58dc85593d4030be91ace669e77b23f4",
+          "md5": "6d72d5aececcaeca6e57f24ae307bb13"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "apollo-runtime-kotlin-5.0.0-alpha.local-SNAPSHOT-sources.jar",
+          "url": "apollo-runtime-5.0.0-alpha.local-SNAPSHOT-sources.jar",
+          "size": 87531,
+          "sha512": "3cfe5bc0d0b6ad3609f6feb687e678b088c2811b1b5a75d02a45b001d1ed85d8719060de66aa0ad089d6f831c8a839b766d88c0149e5a2f9b50092b7348571ff",
+          "sha256": "46e6fe81d8182b1339e4b63daa1f0e13aae11c32fd557f3eea416cf6f1467597",
+          "sha1": "0ec09d04b5b4bd8457ae4026b328601e8d41b954",
+          "md5": "5fad0bc8c0e82cdaed8f56eb79d0c1f4"
+        }
+      ]
+    },
+    {
+      "name": "debugApiElements-published",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "debug",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-android-debug/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-android-debug-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-android-debug",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "debugRuntimeElements-published",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "debug",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-android-debug/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-android-debug-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-android-debug",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "debugSourcesElements-published",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "debug",
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-android-debug/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-android-debug-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-android-debug",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "releaseApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-android/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-android-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-android",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "releaseRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-android/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-android-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-android",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "releaseSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-android/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-android-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-android",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-iosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-iosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-iosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-iosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-iosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-iosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-iosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-iosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-iosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-iossimulatorarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-iossimulatorarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-iossimulatorarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-iossimulatorarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-iossimulatorarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-iossimulatorarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-iossimulatorarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-iossimulatorarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-iossimulatorarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "iosX64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-iosx64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-iosx64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-iosx64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "iosX64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-iosx64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-iosx64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-iosx64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "iosX64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-iosx64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-iosx64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-iosx64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "jsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-js/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-js-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-js",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "jsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-js/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-js-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-js",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "jsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.js.compiler": "ir",
+        "org.jetbrains.kotlin.platform.type": "js"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-js/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-js-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-js",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-jvm/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-jvm-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-jvm",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-jvm/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-jvm-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-jvm",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-jvm/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-jvm-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-jvm",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "linuxApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "linux_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-linux/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-linux-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-linux",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "linuxSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "linux_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-linux/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-linux-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-linux",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "macosArm64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "macos_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-macosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-macosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-macosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "macosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "macos_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-macosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-macosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-macosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "macosArm64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "macos_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-macosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-macosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-macosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "macosX64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "macos_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-macosx64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-macosx64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-macosx64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "macosX64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "macos_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-macosx64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-macosx64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-macosx64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "macosX64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "macos_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-macosx64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-macosx64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-macosx64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "tvosArm64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "tvos_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-tvosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-tvosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-tvosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "tvosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "tvos_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-tvosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-tvosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-tvosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "tvosArm64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "tvos_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-tvosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-tvosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-tvosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "tvosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "tvos_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-tvossimulatorarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-tvossimulatorarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-tvossimulatorarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "tvosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "tvos_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-tvossimulatorarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-tvossimulatorarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-tvossimulatorarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "tvosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "tvos_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-tvossimulatorarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-tvossimulatorarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-tvossimulatorarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "tvosX64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "tvos_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-tvosx64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-tvosx64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-tvosx64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "tvosX64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "tvos_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-tvosx64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-tvosx64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-tvosx64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "tvosX64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "tvos_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-tvosx64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-tvosx64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-tvosx64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "wasmJsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-wasm-js/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-wasm-js-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-wasm-js",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "wasmJsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-wasm-js/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-wasm-js-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-wasm-js",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "wasmJsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-wasm-js/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-wasm-js-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-wasm-js",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "watchosArm32ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "watchos_arm32",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-watchosarm32/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-watchosarm32-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-watchosarm32",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "watchosArm32SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "watchos_arm32",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-watchosarm32/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-watchosarm32-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-watchosarm32",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "watchosArm32MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "watchos_arm32",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-watchosarm32/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-watchosarm32-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-watchosarm32",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "watchosArm64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "watchos_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-watchosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-watchosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-watchosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "watchosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "watchos_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-watchosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-watchosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-watchosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "watchosArm64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "watchos_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-watchosarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-watchosarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-watchosarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "watchosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "watchos_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-watchossimulatorarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-watchossimulatorarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-watchossimulatorarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "watchosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "watchos_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-watchossimulatorarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-watchossimulatorarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-watchossimulatorarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    },
+    {
+      "name": "watchosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "watchos_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../apollo-runtime-watchossimulatorarm64/5.0.0-alpha.local-SNAPSHOT/apollo-runtime-watchossimulatorarm64-5.0.0-alpha.local-SNAPSHOT.module",
+        "group": "com.apollographql.apollo",
+        "module": "apollo-runtime-watchossimulatorarm64",
+        "version": "5.0.0-alpha.local-SNAPSHOT"
+      }
+    }
+  ]
+}
