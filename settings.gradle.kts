@@ -3,6 +3,13 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {
+      // Local Apollo repository with custom artifacts
+      maven {
+        url = uri("$rootDir/repo")
+        content {
+          includeGroup("com.apollographql.apollo")
+        }
+      }
         mavenLocal()
         google {
             mavenContent {
@@ -21,6 +28,13 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+      // Local Apollo repository with custom artifacts
+      maven {
+        url = uri("$rootDir/repo")
+        content {
+          includeGroup("com.apollographql.apollo")
+        }
+      }
         mavenLocal()
         google {
             mavenContent {

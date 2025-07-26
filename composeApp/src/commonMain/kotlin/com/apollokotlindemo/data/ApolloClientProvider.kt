@@ -25,18 +25,18 @@ object ApolloClientProvider {
   private var INSTANCE: ApolloClient? = null
 
   // Environment-based configuration for different platforms
-  private val isProduction = false // Set this based on your build configuration
+  private val isProduction = true // Set this based on your build configuration
 
   // Use local network IP for Android devices and emulators
   private val baseUrl = when {
     isAndroidDevice() -> "http://<local network ip>:8080"  // Your actual local network IP
-    isProduction -> "https://yourapi.com"
+    isProduction -> "https://apollo-kotlin-demo.onrender.com"
     else -> "http://localhost:8080"  // Desktop/web
   }
 
   private val wsUrl = when {
     isAndroidDevice() -> "ws://<local network ip>:8080"   // Your actual local network IP
-    isProduction -> "wss://yourapi.com"
+    isProduction -> "wss://apollo-kotlin-demo.onrender.com"
     else -> "ws://localhost:8080"  // Desktop/web
   }
 
