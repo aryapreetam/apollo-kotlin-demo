@@ -42,7 +42,6 @@ graphql-kotlin-ktor-server = { module = "com.expediagroup:graphql-kotlin-ktor-se
 ktor-websockets = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
 ktor-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime", version.ref = "apollo" }
-apollo-websocket = { module = "com.apollographql.apollo:apollo-websocket", version.ref = "apollo" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
