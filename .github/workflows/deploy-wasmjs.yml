@@ -42,15 +42,12 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Clone Apollo Kotlin repository
+      - name: Build Apollo Kotlin with WASM support
         run: |
           git clone https://github.com/apollographql/apollo-kotlin.git apollo-kotlin
           cd apollo-kotlin
           git checkout main
-
-      - name: Build and publish Apollo Kotlin to local Maven
-        run: |
-          cd apollo-kotlin
+          sed -i 's/VERSION_NAME=.*/VERSION_NAME=5.0.0-alpha.local-SNAPSHOT/' gradle.properties
           ./gradlew publishToMavenLocal -x test
 
       - name: Build WasmJS production
