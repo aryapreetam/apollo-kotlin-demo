@@ -44,7 +44,7 @@ jobs:
 
       - name: Build Apollo Kotlin with WASM support
         run: |
-          git clone https://github.com/apollographql/apollo-kotlin.git apollo-kotlin
+          git clone https://github.com/aryapreetam/apollo-kotlin.git apollo-kotlin
           cd apollo-kotlin
           git checkout main
           sed -i 's/VERSION_NAME=.*/VERSION_NAME=5.0.0-alpha.local-SNAPSHOT/' gradle.properties
