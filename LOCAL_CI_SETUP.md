@@ -237,6 +237,31 @@ apollo-kotlin-demo/
 ### Common Issues
 
 1. **"Plugin was not found" Error:**
+   - **Root Cause**: Incorrect Maven repository structure - artifacts must be in separate directories
+   - **Solution**: Ensure proper directory structure:
+     ```
+     repo/com/apollographql/apollo/
+     ├── apollo-gradle-plugin/5.0.0-alpha.local-SNAPSHOT/
+     ├── com.apollographql.apollo.gradle.plugin/5.0.0-alpha.local-SNAPSHOT/  # Plugin marker
+     ├── apollo-runtime/5.0.0-alpha.local-SNAPSHOT/
+     └── apollo-runtime-wasm-js/5.0.0-alpha.local-SNAPSHOT/
+     ```
+   - **Fix Command**:
+     ```bash
+     rm -rf repo/ && mkdir -p repo/com/apollographql/apollo
+     mkdir -p repo/com/apollographql/apollo/apollo-gradle-plugin
+     cp -r ~/.m2/repository/com/apollographql/apollo/apollo-gradle-plugin/5.0.0-alpha.local-SNAPSHOT repo/com/apollographql/apollo/apollo-gradle-plugin/
+     mkdir -p "repo/com/apollographql/apollo/com.apollographql.apollo.gradle.plugin"
+     cp -r ~/.m2/repository/com/apollographql/apollo/com.apollographql.apollo.gradle.plugin/5.0.0-alpha.local-SNAPSHOT "repo/com/apollographql/apollo/com.apollographql.apollo.gradle.plugin/"
+     mkdir -p repo/com/apollographql/apollo/apollo-runtime
+     cp -r ~/.m2/repository/com/apollographql/apollo/apollo-runtime/5.0.0-alpha.local-SNAPSHOT repo/com/apollographql/apollo/apollo-runtime/
+     mkdir -p repo/com/apollographql/apollo/apollo-runtime-wasm-js
+     cp -r ~/.m2/repository/com/apollographql/apollo/apollo-runtime-wasm-js/5.0.0-alpha.local-SNAPSHOT repo/com/apollographql/apollo/apollo-runtime-wasm-js/
+     ```
+   - Verify `repo/` directory is committed to Git
+   - Check that Apollo version matches across all files
+
+2. **Build Cache Issues:**
     - Ensure `repo/` directory is committed to Git
     - Verify `settings.gradle.kts` points to correct local repository
     - Check that Apollo version matches across all files
