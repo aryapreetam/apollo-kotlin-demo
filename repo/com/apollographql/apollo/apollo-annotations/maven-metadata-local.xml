@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.apollographql.apollo</groupId>
+  <artifactId>apollo-annotations</artifactId>
+  <versioning>
+    <latest>5.0.0-alpha.local-SNAPSHOT</latest>
+    <release>5.0.0-alpha.local-SNAPSHOT</release>
+    <versions>
+      <version>5.0.0-alpha.local-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20250126</lastUpdated>
+    <snapshot>
+      <timestamp>20250126.212800</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+  </versioning>
+</metadata>
