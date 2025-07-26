@@ -1,0 +1,96 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.apollographql.apollo",
+    "module": "apollo-gradle-plugin",
+    "version": "5.0.0-alpha.local-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.0.0-rc-1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.9.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "apollo-gradle-plugin-5.0.0-alpha.local-SNAPSHOT.jar",
+          "url": "apollo-gradle-plugin-5.0.0-alpha.local-SNAPSHOT.jar",
+          "size": 346470,
+          "sha512": "3fd6fc8e8056156d764f90ff34ef5496d14240f6ad9d8835d3d63376091a72cd512929048d9b12619350b6af3c8aeed042250b103788ec93002f4a51bd5d2d47",
+          "sha256": "e734d89771f7c80df340baac45c4e77f88c3beb9223810693f68fa3b8ff58927",
+          "sha1": "c5237ddc0659a515711a80ca4782aba11f3d6011",
+          "md5": "846b9ad7db5b8182ed547069136227a2"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.gradleup.gratatouille",
+          "module": "gratatouille-wiring-runtime",
+          "version": {
+            "requires": "0.0.10"
+          }
+        },
+        {
+          "group": "com.apollographql.apollo",
+          "module": "apollo-annotations",
+          "version": {
+            "requires": "5.0.0-alpha.local-SNAPSHOT"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.9.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "apollo-gradle-plugin-5.0.0-alpha.local-SNAPSHOT.jar",
+          "url": "apollo-gradle-plugin-5.0.0-alpha.local-SNAPSHOT.jar",
+          "size": 346470,
+          "sha512": "3fd6fc8e8056156d764f90ff34ef5496d14240f6ad9d8835d3d63376091a72cd512929048d9b12619350b6af3c8aeed042250b103788ec93002f4a51bd5d2d47",
+          "sha256": "e734d89771f7c80df340baac45c4e77f88c3beb9223810693f68fa3b8ff58927",
+          "sha1": "c5237ddc0659a515711a80ca4782aba11f3d6011",
+          "md5": "846b9ad7db5b8182ed547069136227a2"
+        }
+      ]
+    }
+  ]
+}
