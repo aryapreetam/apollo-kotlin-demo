@@ -205,20 +205,37 @@ class StringsViewModel(
     stopSubscription()
 
     println("ViewModel: Starting subscription to updates")
-    subscriptionJob = viewModelScope.launch {
+
+    // Launch text-based subscription in its own coroutine
+    val textSubscriptionJob = viewModelScope.launch {
       repository.subscribeToStringUpdates()
         .catch { error ->
-          println("ViewModel: Subscription error - ${error.message}")
+          println("ViewModel: Text subscription error - ${error.message}")
           _uiState.value = _uiState.value.copy(
             errorMessage = "Subscription error: ${error.message}"
           )
         }
         .collect { updatedStrings ->
-          println("ViewModel: Received subscription update with ${updatedStrings.size} strings")
+          println("ViewModel: Received text subscription update with ${updatedStrings.size} strings")
           _uiState.value = _uiState.value.copy(strings = updatedStrings)
         }
     }
-    println("ViewModel: Subscription job created with ID: ${subscriptionJob?.hashCode()}")
+
+    // Launch binary subscription in its own coroutine
+    val binarySubscriptionJob = viewModelScope.launch {
+      repository.binarySubscribeToStringUpdates()
+        .catch { error ->
+          println("ViewModel: Binary subscription error - ${error.message}")
+        }
+        .collect { binaryData ->
+          println("binaryDataConvertedtoString: $binaryData")
+        }
+    }
+
+    // Store both jobs (you might want to store them separately if needed)
+    subscriptionJob = textSubscriptionJob
+
+    println("ViewModel: Both subscription jobs created")
   }
 
   /**

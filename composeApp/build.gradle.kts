@@ -11,6 +11,7 @@ plugins {
   alias(libs.plugins.composeCompiler)
   alias(libs.plugins.composeHotReload)
   alias(libs.plugins.apollo)
+  alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -72,6 +73,8 @@ kotlin {
       implementation(libs.androidx.lifecycle.viewmodel)
       implementation(libs.androidx.lifecycle.runtimeCompose)
       implementation(libs.apollo.runtime)
+      implementation(libs.kotlinx.serialization.core)
+      implementation(libs.kotlinx.serialization.json)
       implementation(projects.shared)
     }
     commonTest.dependencies {

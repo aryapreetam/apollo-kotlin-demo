@@ -17,6 +17,8 @@ type Mutation {
 }
 
 type Query {
+  binaryStrings: String!
+
   strings: [String!]!
 }
 
@@ -26,6 +28,8 @@ Built-in String
 scalar String
 
 type Subscription {
+  binaryStringListChanges: String!
+
   stringListChanges: [String!]!
 }
 
