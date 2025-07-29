@@ -3,6 +3,8 @@
 This project demonstrates **GraphQL subscriptions working with WebAssembly (WasmJS) target** in Apollo Kotlin. It uses
 a custom Apollo Kotlin build with WASM support that is automatically built from source in CI.
 
+This was created as a demo for [PR Link](https://github.com/apollographql/apollo-kotlin/pull/6637)
+
 ## 🚀 What This Project Demonstrates
 
 - **GraphQL Subscriptions** working across all Kotlin Multiplatform targets including **WasmJS**
@@ -154,6 +156,10 @@ Pre-built executables will be available in the [Releases](../../releases) sectio
 </table>
 
 https://github.com/user-attachments/assets/f394db05-c9d0-40da-9183-cde85d480e56
+
+Websockets with binary data(send/receive) in wasmJs:
+
+https://github.com/user-attachments/assets/5bf70590-7f40-436e-8194-0368bd1b3862
 
 ## 🔧 Development
 

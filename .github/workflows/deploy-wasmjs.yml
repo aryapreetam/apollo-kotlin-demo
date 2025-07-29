@@ -51,12 +51,12 @@ jobs:
           ./gradlew publishToMavenLocal -x test
 
       - name: Build WasmJS production
-        run: ./gradlew :composeApp:wasmJsBrowserDevelopmentExecutableDistribution
+        run: ./gradlew :composeApp:wasmJsBrowserDistribution
 
       - name: Prepare GitHub Pages content
         run: |
           mkdir -p github-pages
-          cp -r composeApp/build/dist/wasmJs/developmentExecutable/* github-pages/
+          cp -r composeApp/build/dist/wasmJs/productionExecutable/* github-pages/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
