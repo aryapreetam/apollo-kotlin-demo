@@ -19,7 +19,7 @@ ktor = "3.2.0"
 logback = "1.5.18"
 # FIXME 8.8.1 has issues with ktor 3.2 using alpha version. change once stable version is available
 graphql-kotlin = "9.0.0-alpha.8"
-apollo = "5.0.0-alpha.local2-SNAPSHOT"
+apollo = "5.0.0-alpha.local-SNAPSHOT"
 kotlinx-serialization = "1.9.0"
 
 [libraries]
