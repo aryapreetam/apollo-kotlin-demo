@@ -12,13 +12,14 @@ data class StringsUiState(
   val isAddingString: Boolean = false,
   val isUpdatingString: Boolean = false,
   val isDeletingString: Boolean = false,
-  val errorMessage: String? = null
+  val errorMessage: String? = null,
+  val snackbarMessage: String? = null // New state for triggering snackbar with received WebSocket message
 ) {
   val isInputValid: Boolean
-    get() = inputText.isNotBlank()
+    get() = inputText.trim().isNotEmpty()
 
   val isEditTextValid: Boolean
-    get() = editText.isNotBlank()
+    get() = editText.trim().isNotEmpty()
 
   val hasStrings: Boolean
     get() = strings.isNotEmpty()

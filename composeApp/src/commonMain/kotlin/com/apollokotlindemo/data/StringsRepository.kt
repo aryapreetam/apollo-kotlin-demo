@@ -103,37 +103,4 @@ class StringsRepository {
         response.data?.stringListChanges?.filterNotNull() ?: emptyList()
       }
   }
-
-  /**
-   * Subscribe to binary string list updates using WebSocket subscription
-   */
-  fun binarySubscribeToStringUpdates(): Flow<String> {
-    println("binarySubscribeToStringUpdates()")
-    return apolloClient.subscription(BinaryStringListUpdatesSubscription())
-      .toFlow()
-      .catch { e ->
-        println("WebSocket subscription error: ${e.message}")
-        throw e
-      }
-      .map { response ->
-        val base64StringData = response.data?.binaryStringListChanges ?: ""
-        println("Received binary subscription - Base64 length: ${base64StringData.length}")
-
-        try {
-          // Decode Base64 to get JSON string
-          val decodedBytes = Base64.decode(base64StringData)
-          val jsonString = decodedBytes.decodeToString()
-          println("Decoded JSON: $jsonString")
-
-          // Deserialize JSON to List<String>
-          val stringList = Json.decodeFromString<List<String>>(jsonString)
-          println("Deserialized list: $stringList")
-
-          "Binary data decoded successfully: $stringList"
-        } catch (e: Exception) {
-          println("Error decoding binary data: ${e.message}")
-          "Error decoding binary data: ${e.message}"
-        }
-      }
-  }
 }

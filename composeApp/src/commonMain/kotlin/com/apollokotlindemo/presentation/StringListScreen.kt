@@ -9,12 +9,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.Key.Companion.R
-import androidx.compose.ui.input.key.Key.Companion.Ro
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.apollokotlindemo.presentation.components.StringListItem
-import org.jetbrains.compose.resources.painterResource
 
 /**
  * Main screen for displaying and managing the strings list
@@ -53,11 +50,25 @@ private fun StringListContent(
   onClearError: () -> Unit,
   modifier: Modifier = Modifier
 ) {
-  MaterialTheme {
+  val snackbarHostState = remember { SnackbarHostState() }
+
+  // Show snackbar when a message is received
+  LaunchedEffect(uiState.snackbarMessage) {
+    uiState.snackbarMessage?.let { message ->
+      snackbarHostState.showSnackbar(message)
+    }
+  }
+
+  Scaffold(
+    modifier = modifier,
+    snackbarHost = { SnackbarHost(snackbarHostState) }
+  ) { paddingValues ->
     Column(
-      modifier = modifier
+      modifier = Modifier
         .fillMaxSize()
+        .padding(paddingValues)
         .padding(16.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
       // Title

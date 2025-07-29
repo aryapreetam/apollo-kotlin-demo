@@ -11,6 +11,10 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.statuspages.*
+import io.ktor.websocket.Frame
+import io.ktor.websocket.readBytes
+import io.ktor.websocket.readText
+import kotlinx.coroutines.launch
 
 fun main() {
   val port = System.getenv("PORT")?.toIntOrNull() ?: 8080
@@ -71,6 +75,30 @@ fun Application.module() {
   routing {
     get("/") {
       call.respondText("GraphQL Ktor Server is running! Visit /graphiql for GraphiQL playground")
+    }
+    webSocket("/ws") {
+      println("Client connected: $this")
+      val session = this
+      // Register this session with the service
+      val job = launch {
+        StringListService.instance.events.collect {
+          println("Sending event: $it")
+          val bytes = it.encodeToByteArray()
+          session.send(Frame.Binary(true, bytes))
+        }
+      }
+      try {
+        for(frame in incoming) {
+          when(frame){
+            is Frame.Text -> println("Client sent text: ${frame.readText()}")
+            is Frame.Binary -> println("Client sent binary: ${frame.readBytes().decodeToString()}")
+            else -> println("Invalid")
+          }
+        }
+      } finally {
+        println("Client disconnected $this")
+        job.cancel()
+      }
     }
     graphQLGetRoute()
     // GraphQL HTTP endpoint
